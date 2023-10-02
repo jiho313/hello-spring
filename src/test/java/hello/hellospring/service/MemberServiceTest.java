@@ -28,14 +28,14 @@ class MemberServiceTest {
 
     @Test
     void 회원가입() {
-        // given
+        // given - 주어진 데이터
         Member member = new Member();
         member.setName("hello");
 
-        // when
+        // when - 실제로 행할 동작
         Long saveId = memberService.join(member);
 
-        // then
+        // then - 기대하는 결과
         Member findMember = memberService.findOne(saveId).get();
         assertThat(member.getName()).isEqualTo(findMember.getName());
     }
@@ -53,6 +53,7 @@ class MemberServiceTest {
         memberService.join(member1);
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
 
+        // then
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 
 /*
@@ -63,8 +64,6 @@ class MemberServiceTest {
             assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
         }
 */
-
-        // then
     }
 
     @Test
