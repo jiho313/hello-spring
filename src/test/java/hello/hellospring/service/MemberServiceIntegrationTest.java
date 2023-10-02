@@ -1,33 +1,30 @@
 package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+@SpringBootTest
+// @Transactional - 테스트 진행 전에 트랜젝션을 시작하고 테스트 완료 후 항상 롤백한다.
+// 테스트가 끝나면 DB에 저장된 데이터가 남지 않음
+// 다음 테스트에 영향을 주지 않음
+@Transactional
 
-// 스프링 없이하는 순수 자바로 하는 테스트 - 단위 테스트
-// 스프링을 이용한 테스트보다 속도가 빠르다.
-// 통합 테스트보다 순수 자바 코드로 단위 테스트를 잘 하는 것이 좋은 테스트다.
-class MemberServiceTest {
+// 스프링 컨테이너를 이용한 테스트 - 통합 테스트
+// 순수 자바 테스트 보다 속도가 느리다.
+class MemberServiceIntegrationTest {
 
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
-
-    @BeforeEach
-    public void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach() {
-        memberRepository.clearStore();
-    }
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
     @Test
     void 회원가입() {
@@ -47,10 +44,10 @@ class MemberServiceTest {
     void 중복_회원_예외() {
         // given
         Member member1 = new Member();
-        member1.setName("spring");
+        member1.setName("spring1");
 
         Member member2 = new Member();
-        member2.setName("spring");
+        member2.setName("spring1");
 
         // when
         memberService.join(member1);
@@ -67,13 +64,5 @@ class MemberServiceTest {
             assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
         }
 */
-    }
-
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
     }
 }

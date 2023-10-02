@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class MemberService {
 
+public class MemberService {
+    // 의존 관계 - 사용 관계
     private final MemberRepository memberRepository;
 
+    // DI(의존성 주입)
+    // 필드 주입, setter주입, 생성자 주입 방법이 있다.
 
     // 생성자가 하나일 때는 어노테이션 생략 가능
+    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
