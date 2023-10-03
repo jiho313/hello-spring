@@ -32,7 +32,9 @@ public class SpringConfig {
 //    }
 
 //    @Bean
-//    // 인터페이스를 통해 확장 구현한 거라 db엑세스 방법을 쉽게 변경할 수 있다.
+    // 인터페이스를 통해 구현하여 확장했기 때문에 db엑세스 방법을 쉽게 변경할 수 있다.
+    // 사용할 인터페이스 구현체를 생성하여 반환하는 메소드를 빈으로 등록해준다.
+    // SpringDataJpa를 사용할 경우 이 메소드는 사용하지 않는다.
 //    public MemberRepository memberRepository() {
 //        return new MemoryMemberRepository();
 //        return new JdbcMemberRepository(dataSource);
