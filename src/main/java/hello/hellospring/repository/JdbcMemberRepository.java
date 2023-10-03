@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/*
+* 여기서 최초로 h2 db를 쓴다.
+* h2.bat를 실행시켜 h2 db서버를 켜줘야 한다. 안 켜주면 실행 자체가 불가
+*/
 public class JdbcMemberRepository implements MemberRepository {
     private final DataSource dataSource;
     public JdbcMemberRepository(DataSource dataSource) {
